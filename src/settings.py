@@ -40,12 +40,14 @@ INSTALLED_APPS = [
 
     # 3rd packages
     'rest_framework',
+    'rest_framework.authtoken',
     'django_filters',
     "debug_toolbar",
     'django_cleanup.apps.CleanupConfig',
 
     # local
     'products.apps.ProductsConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -136,5 +138,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 INTERNAL_IPS = ["127.0.0.1"]
