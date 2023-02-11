@@ -11,6 +11,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
 class CreateTokenSerializer(serializers.Serializer):
     email = serializers.EmailField()
+    password = serializers.CharField()
 
 
 class GetUserSerializer(serializers.Serializer):
