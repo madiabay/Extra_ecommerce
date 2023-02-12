@@ -21,6 +21,6 @@ class ProductViewSet(mixins.ActionSerializerMixin, ModelViewSet):
     
     def get_permissions(self):
         if self.action in ('list', 'retrieve'):
-            return (AllowAny(),)
+            return (IsAuthenticated(),)
         
         return (permissions.IsMe(),)

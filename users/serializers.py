@@ -6,12 +6,16 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.CustomUser
-        fields = ('email', 'password')
+        fields = ('phone_number', 'email')
+
+
+class VerifyUserSerializer(serializers.Serializer):
+    session_id = serializers.UUIDField()
+    code = serializers.CharField(max_length=4)
 
 
 class CreateTokenSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password = serializers.CharField()
+    phone_number = serializers.CharField()
 
 
 class GetUserSerializer(serializers.Serializer):
