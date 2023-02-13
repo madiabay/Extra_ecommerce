@@ -11,7 +11,7 @@ class IsMe(DjangoObjectPermissions):
     def has_permission(self, request, view):
         return bool(request.user
             and request.user.is_authenticated
-            and request.user.email == 'adik@krmu.kz'
+            and request.user.email == 'madi@gmail.com'
         )
     
     def has_object_permission(self, request, view, obj: models.Product):
