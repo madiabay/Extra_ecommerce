@@ -3,6 +3,9 @@ import uuid
 from rest_framework_simplejwt import tokens
 from typing import OrderedDict, Protocol
 from django.core.cache import cache
+from django.core.mail import send_mail
+from templated_email import send_templated_mail
+from django.conf import settings
 
 from . import repos, models
 
@@ -22,13 +25,7 @@ class UserServicesV1:
     user_repos: repos.UserReposInterface = repos.UserReposV1()
 
     def create_user(self, data: OrderedDict) -> dict:
-        code = self._generate_code()
-        session_id = self._generate_session_id()
-        session = {'code': code, **data}
-        cache.set(session_id, session, timeout=300)
-        self._send_sms_to_phone_number(data['phone_number'], code)
-
-        return {'session_id': session_id}
+        return self._verify_phone_number(data=data)
 
 
     def verify_user(self, data: OrderedDict) -> models.CustomUser | None:
@@ -40,7 +37,7 @@ class UserServicesV1:
         if user_data['code'] != data['code']:
             return
 
-        self._send_letter_to_email(user_data['email'])
+        self._send_letter_to_email(user=user_data)
         return self.user_repos.create_user({
             'email': user_data['email'],
             'phone_number': user_data['phone_number'],
@@ -48,15 +45,7 @@ class UserServicesV1:
     
 
     def create_token(self, data: OrderedDict) -> dict:
-        user = self.user_repos.get_user(data=data)
-
-        code = self._generate_code()
-        session_id = self._generate_session_id()
-        cache.set(session_id, {'phone_number': str(user.phone_number), 'code': code}, timeout=300)
-        self._send_sms_to_phone_number(user.phone_number, code)
-
-        return {'session_id': session_id}
-
+        return self._verify_phone_number(data=data, is_exist=True)
 
     
     def verify_token(self, data: OrderedDict) -> dict | None:
@@ -77,9 +66,30 @@ class UserServicesV1:
     
 
     @staticmethod
-    def _send_letter_to_email(email: str) -> None:
-        print(f'send letter to {email}')
+    def _send_letter_to_email(user: models.CustomUser) -> None:
+        send_templated_mail(
+            template_name='welcome',
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[user['email']],
+            context={
+                'phone_number': user['phone_number'],
+                'email': user['email'],
+            }
+        )
+    
 
+    def _verify_phone_number(self, data: OrderedDict, is_exist: bool = False) -> str:
+        if is_exist:
+            self.user_repos.get_user(data=data)
+
+        code = self._generate_code()
+        session_id = self._generate_session_id()
+        cache.set(session_id, {'code': code, **data}, timeout=300)
+        self._send_sms_to_phone_number(data['phone_number'], code)
+        
+        return {'session_id': session_id}
+
+    
     @staticmethod
     def _send_sms_to_phone_number(phone_number: str, code: str) -> None:
         print(f'send sms code {code} to {phone_number}')

@@ -1,0 +1,10 @@
+{% block subject %}WELCOME TO OUR E-COMMERCE{% endblock %}
+{% block plain %}
+  Hi!!!
+
+  You just signed up for my website, using:
+      phone_number: {{phone_number}}
+      email: {{email}}
+
+  Thanks, you rock!
+{% endblock %}
