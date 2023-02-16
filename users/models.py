@@ -7,6 +7,8 @@ from django.utils.translation import gettext_lazy as _
 
 from phonenumber_field.modelfields import PhoneNumberField
 
+from . import choices
+
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, phone_number, email):
@@ -45,6 +47,12 @@ class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(unique=True, verbose_name=_("Email"))
     phone_number = PhoneNumberField(unique=True)
+    user_type = models.CharField(
+        choices=choices.UserTypeChoices.choices,
+        null=True,
+        blank=True,
+        max_length=8,
+    )
 
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = ['email']

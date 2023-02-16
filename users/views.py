@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from rest_framework.authtoken.models import Token
+from drf_yasg.utils import swagger_auto_schema
 
 from . import serializers, services, models
 
@@ -26,6 +27,7 @@ class UserViewSet(ViewSet):
         return Response(serializer.data, status.HTTP_201_CREATED)
     
 
+    @swagger_auto_schema(request_body=serializers.CreateTokenSerializer)
     def create_token(self, request, *args, **kwargs):
         serializer = serializers.CreateTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

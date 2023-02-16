@@ -12,6 +12,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
+    min_amount = serializers.DecimalField(read_only=True, max_digits=14, decimal_places=2)
 
     class Meta:
         model = models.Product

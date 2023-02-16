@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth import get_user_model
+
 
 class Product(models.Model):
 
@@ -13,7 +13,6 @@ class Product(models.Model):
     is_active = models.BooleanField(default=True, verbose_name=_('Is active?'))
 
     data = models.JSONField(default=dict, verbose_name=_('data'))
-    user = models.ForeignKey(to=get_user_model(), on_delete=models.SET_NULL, blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

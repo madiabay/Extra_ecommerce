@@ -9,4 +9,5 @@ urlpatterns = [
     path('users/token/', UserViewSet.as_view({'post': 'create_token'})),
     path('users/token/verify/', UserViewSet.as_view({'post': 'verify_token'})),
     path('users/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/', include('djoser.urls')),
 ]
