@@ -36,6 +36,7 @@ class UserViewSet(ViewSet):
         return Response(session_id)
     
 
+    @swagger_auto_schema(request_body=serializers.VerifyUserSerializer)
     def verify_token(self, request, *args, **kwargs):
         serializer = serializers.VerifyUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
