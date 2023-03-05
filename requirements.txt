@@ -41,6 +41,7 @@ oauthlib==3.2.2
 packaging==23.0
 phonenumberslite==8.13.6
 Pillow==9.4.0
+psycopg2-binary==2.9.5
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.21
