@@ -12,6 +12,9 @@ services:
     depends_on:
       - ecommerce-db
       - ecommerce-redis
+    volumes:
+      - ecommerce_media:/media
+      - ecommerce_static:/static
     command: /start-django
     expose:
       - 8000
@@ -24,6 +27,8 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: 123
+    volumes:
+      - ecommerce_db_data:/var/lib/postgresql/data
     ports:
       - "6543:5432"
   
@@ -32,3 +37,9 @@ services:
     image: redis:7
     ports:
       - "6738:6739"
+
+
+volumes:
+  ecommerce_db_data: {}
+  ecommerce_media: {}
+  ecommerce_static: {}
