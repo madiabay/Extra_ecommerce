@@ -11,6 +11,7 @@ charset-normalizer==3.0.1
 constantly==15.1.0
 coreapi==2.3.3
 coreschema==0.0.4
+coverage==7.2.1
 cryptography==39.0.1
 daphne==4.0.0
 defusedxml==0.7.1
@@ -30,10 +31,12 @@ djangorestframework==3.14.0
 djangorestframework-simplejwt==4.8.0
 djoser==2.1.0
 drf-yasg==1.21.5
+exceptiongroup==1.1.0
 hyperlink==21.0.0
 idna==3.4
 incremental==22.10.0
 inflection==0.5.1
+iniconfig==2.0.0
 itypes==1.2.0
 Jinja2==3.1.2
 MarkupSafe==2.1.2
@@ -42,12 +45,16 @@ oauthlib==3.2.2
 packaging==23.0
 phonenumberslite==8.13.6
 Pillow==9.4.0
+pluggy==1.0.0
 psycopg2-binary==2.9.5
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.21
 PyJWT==2.6.0
 pyOpenSSL==23.0.0
+pytest==7.2.2
+pytest-cov==4.0.0
+pytest-django==4.5.2
 python3-openid==3.2.0
 pytz==2022.7.1
 redis==4.5.1
@@ -60,6 +67,7 @@ six==1.16.0
 social-auth-app-django==4.0.0
 social-auth-core==4.3.0
 sqlparse==0.4.3
+tomli==2.0.1
 Twisted==22.10.0
 txaio==23.1.1
 typing_extensions==4.5.0

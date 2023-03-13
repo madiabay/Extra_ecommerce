@@ -1,0 +1,71 @@
+[
+    {
+       "model":"users.customuser",
+       "pk":"70795f58-43f6-4f5a-9b87-be8f01bf2e69",
+       "fields":{
+          "password":"",
+          "last_login":null,
+          "is_superuser":false,
+          "first_name":"",
+          "last_name":"",
+          "is_staff":false,
+          "is_active":true,
+          "date_joined":"2023-03-07T12:36:21.860Z",
+          "email":"",
+          "phone_number":"",
+          "user_type":null,
+          "groups":[
+             
+          ],
+          "user_permissions":[
+             
+          ]
+       }
+    },
+    {
+       "model":"users.customuser",
+       "pk":"916824df-f4a7-4b82-a3de-760bff141323",
+       "fields":{
+          "password":"",
+          "last_login":null,
+          "is_superuser":false,
+          "first_name":"",
+          "last_name":"",
+          "is_staff":false,
+          "is_active":true,
+          "date_joined":"2023-03-07T12:35:24.675Z",
+          "email":"customer@mail.ru",
+          "phone_number":"+77082698955",
+          "user_type":"Customer",
+          "groups":[
+             
+          ],
+          "user_permissions":[
+             
+          ]
+       }
+    },
+    {
+       "model":"users.customuser",
+       "pk":"c1313f51-5118-4d47-9721-77a18c728d11",
+       "fields":{
+          "password":"",
+          "last_login":null,
+          "is_superuser":false,
+          "first_name":"",
+          "last_name":"",
+          "is_staff":false,
+          "is_active":true,
+          "date_joined":"2023-03-07T12:36:45.904Z",
+          "email":"seller@mail.ru",
+          "phone_number":"+77082698956",
+          "user_type":"Seller",
+          "groups":[
+             
+          ],
+          "user_permissions":[
+             
+          ]
+       }
+    }
+ ]
