@@ -2,7 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
 
-from . import models, serializers, services
+from . import models, serializers, services, permissions
 from utils import mixins
 
 
@@ -21,6 +21,7 @@ class OrderViewSet(mixins.ActionSerializerMixin, ModelViewSet):
 
     serializer_class = serializers.OrderSerializer
     queryset = order_services.get_orders()
+    permission_classes = permissions.IsCustomer,
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

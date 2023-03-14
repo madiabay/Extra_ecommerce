@@ -9,6 +9,8 @@ from django.conf import settings
 
 from . import repos, models
 
+from rest_framework.exceptions import ValidationError
+
 
 class UserServicesInterface(Protocol):
 
@@ -32,10 +34,10 @@ class UserServicesV1:
         user_data = cache.get(data['session_id'])
 
         if not user_data:
-            return
+            raise ValidationError
         
         if user_data['code'] != data['code']:
-            return
+            raise ValidationError
 
         self._send_letter_to_email(user=user_data)
         return self.user_repos.create_user({
@@ -51,10 +53,10 @@ class UserServicesV1:
     def verify_token(self, data: OrderedDict) -> dict | None:
         session = cache.get(data['session_id'])
         if not session:
-            return
+            raise ValidationError
         
         if session['code'] != data['code']:
-            return
+            raise ValidationError
 
         user = self.user_repos.get_user(data={'phone_number': session['phone_number']})
         refresh = tokens.RefreshToken.for_user(user=user)

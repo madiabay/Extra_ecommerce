@@ -11,7 +11,7 @@ class _CreateOrderItemSerializer(serializers.ModelSerializer):
 
 class CreateOrderSerializer(serializers.ModelSerializer):
     customer = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    order_items = _CreateOrderItemSerializer(write_only=True, many=True)
+    order_items = _CreateOrderItemSerializer(write_only=True, many=True, min_length=1)
 
     class Meta:
         model = models.Order
