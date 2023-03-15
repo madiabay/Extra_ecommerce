@@ -3,6 +3,8 @@ import helpers
 
 from rest_framework import status
 
+from django.utils import timezone, datetime_safe
+
 
 @pytest.mark.django_db
 class UserViewTest:
@@ -63,3 +65,8 @@ class UserViewTest:
         )
 
         assert response.status_code == status_code
+
+    
+    @pytest.mark.freeze_time('2023-01-01')
+    def test_date(self):
+        assert timezone.now().date() == datetime_safe.date(2023, 1, 1)

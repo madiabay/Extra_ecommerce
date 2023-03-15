@@ -11,6 +11,7 @@ from . import choices
 
 
 class CustomUserManager(BaseUserManager):
+
     def create_user(self, phone_number, email):
         """
         Creates and saves a User with the given email and password.
@@ -25,27 +26,30 @@ class CustomUserManager(BaseUserManager):
         )
 
         user.set_unusable_password()
-        user.save(using=self._db)
+        user.save()
 
         return user
 
-    def create_superuser(self, phone_number, email):
+    def create_superuser(self, phone_number, email, password=None):
         """
         Creates and saves a superuser with the given email and password.
         """
         user = self.create_user(phone_number=phone_number, email=email)
         user.is_staff = True
-        user.is_admin = True
         user.is_superuser = True
-        user.save(using=self._db)
+        user.set_password(password)
+        user.save()
 
         return user
+
+    def active(self):
+        return self.filter(is_active=True)
 
 
 class CustomUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    username = None
-    email = models.EmailField(unique=True, verbose_name=_("Email"))
+    username = models.CharField(blank=True, null=True, max_length=1)
+    email = models.EmailField(unique=True, verbose_name=_('Email'))
     phone_number = PhoneNumberField(unique=True)
     user_type = models.CharField(
         choices=choices.UserTypeChoices.choices,
@@ -59,6 +63,5 @@ class CustomUser(AbstractUser):
 
     objects = CustomUserManager()
 
-
-    def __str__(self) -> str:
+    def __str__(self):
         return str(self.phone_number)

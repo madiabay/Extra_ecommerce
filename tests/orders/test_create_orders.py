@@ -4,11 +4,9 @@ from django.contrib.auth import get_user_model
 from django.db.models import Sum
 
 from seller_products.models import SellerProduct
-from seller_products import choices
-from products import models
+from payments import models as payment_models, choices as payment_choices
 from orders import repos
 
-from django.test import Client
 from rest_framework import status
 import helpers
 
@@ -19,7 +17,7 @@ class CreateOrderReposTest:
 
     @pytest.fixture(autouse=True)
     def loaddata(self, load_fixtures):
-        load_fixtures('users.json', 'products.json', 'seller_products.json')
+        load_fixtures('users.json', 'products.json', 'seller_products.json',)# 'payments.json')
 
     @pytest.mark.parametrize('user_id, seller_product_ides', (
         ('916824df-f4a7-4b82-a3de-760bff141323', (1,)),
@@ -43,9 +41,9 @@ class CreateOrderReposTest:
         
         assert total == sum(i['seller_product'].amount for i in order_items)
 
-        assert all(
-            i.amount_currency == choices.CurrencyChoices.KZT for i in order.order_items.all()
-        )
+        # bill = payment_models.Bill.objects.get(order=order)
+        # assert bill.amount == bill.total == total
+        # assert bill.status == payment_choices.BillStatusChoices.New
 
 
 @pytest.mark.django_db

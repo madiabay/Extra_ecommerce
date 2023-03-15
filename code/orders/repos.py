@@ -1,8 +1,10 @@
 from typing import OrderedDict, Protocol
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Sum
 from django.db import transaction
 
 from . import models
+from payments import models as payment_models
+from seller_products import choices as seller_product_choices
 
 
 class OrderReposInterface(Protocol):
@@ -29,6 +31,15 @@ class OrderReposV1:
                     amount_currency=i['seller_product'].amount_currency,
                 ) for i in order_items
             ])
+
+            total = order.order_items.aggregate(total=Sum('amount'))['total']
+            payment_models.Bill.objects.create(
+                order=order,
+                total=total,
+                amount=total,
+                amount_currency=seller_product_choices.CurrencyChoices.KZT,
+                number=payment_models.Bill.generate_number()
+            )
 
         return order
     

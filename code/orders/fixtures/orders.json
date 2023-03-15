@@ -1,0 +1,22 @@
+[
+    {
+        "model": "orders.order",
+        "pk": 2,
+        "fields": {
+            "customer": "916824df-f4a7-4b82-a3de-760bff141323",
+            "status": "New",
+            "created_at": "2023-03-15T12:29:17.083Z",
+            "updated_at": "2023-03-15T12:29:17.083Z"
+        }
+    },
+    {
+        "model": "orders.orderitem",
+        "pk": 2,
+        "fields": {
+            "order": 2,
+            "seller_product": 1,
+            "amount": "10000.00",
+            "amount_currency": "KZT"
+        }
+    }
+]
