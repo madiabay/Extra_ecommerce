@@ -16,6 +16,6 @@ class BillViewTest:
     ))
     def test_pay_bill(self, bill_id, api_client):
         
-        response = api_client.post(f'api/v1/bills/{bill_id}/pay/')
+        response = api_client.post(f'/api/v1/bills/{bill_id}/pay/')
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
