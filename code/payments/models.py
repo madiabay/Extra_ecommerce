@@ -25,6 +25,7 @@ class Bill(models.Model):
         default=choices.BillStatusChoices.New
     )
     number = models.CharField(max_length=10, unique=True, db_index=True)
+    expires_at = models.DateTimeField(blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

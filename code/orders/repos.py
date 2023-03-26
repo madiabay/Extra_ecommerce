@@ -6,11 +6,14 @@ from . import models
 from payments import models as payment_models
 from seller_products import choices as seller_product_choices
 
+from django.utils import timezone
+import datetime
+
 
 class OrderReposInterface(Protocol):
 
     @staticmethod
-    def create_order(data: OrderedDict) -> models.Order: ...
+    def create_order(data: OrderedDict) -> tuple[models.Order, payment_models.Bill]: ...
 
     @staticmethod
     def get_orders() -> QuerySet[models.Order]: ...
@@ -19,7 +22,7 @@ class OrderReposInterface(Protocol):
 class OrderReposV1:
 
     @staticmethod
-    def create_order(data: OrderedDict) -> models.Order:
+    def create_order(data: OrderedDict) -> tuple[models.Order, payment_models.Bill]:
         with transaction.atomic():
             order_items = data.pop('order_items')
             order = models.Order.objects.create(**data)
@@ -33,15 +36,16 @@ class OrderReposV1:
             ])
 
             total = order.order_items.aggregate(total=Sum('amount'))['total']
-            payment_models.Bill.objects.create(
+            bill = payment_models.Bill.objects.create(
                 order=order,
                 total=total,
                 amount=total,
                 amount_currency=seller_product_choices.CurrencyChoices.KZT,
-                number=payment_models.Bill.generate_number()
+                number=payment_models.Bill.generate_number(),
+                expires_at=timezone.now() + datetime.timedelta(minutes=30)
             )
 
-        return order
+        return order, bill
     
     @staticmethod
     def get_orders() -> QuerySet[models.Order]:
