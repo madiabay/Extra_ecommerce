@@ -8,13 +8,15 @@ services:
       context: .
       dockerfile: Dockerfile
     env_file:
-      - ./code/.env
+      - code/.env
+    environment:
+      DB_URL: postgres://postgres:123@ecommerce-db:5432/postgres
+      REDIS_URL: redis://ecommerce-redis:6379
     depends_on:
       - ecommerce-db
       - ecommerce-redis
     volumes:
-      - ecommerce_media:/media
-      - ecommerce_static:/static
+      - .:/proj
     command: /start-django
     expose:
       - 8000
@@ -24,7 +26,6 @@ services:
   ecommerce-db:
     container_name: ecommerce-db
     image: postgres:14
-    restart: always
     environment:
       POSTGRES_PASSWORD: 123
     volumes:
@@ -34,12 +35,8 @@ services:
   
   ecommerce-redis:
     container_name: ecommerce-redis
-    image: redis:7
-    ports:
-      - "6738:6739"
+    image: redis
 
 
 volumes:
   ecommerce_db_data: {}
-  ecommerce_media: {}
-  ecommerce_static: {}
