@@ -9,5 +9,4 @@ python /proj/code/manage.py migrate
 python /proj/code/manage.py collectstatic --noinput
 
 cd /proj/code
-
 daphne -b 0.0.0.0 -p 8000 src.asgi:application

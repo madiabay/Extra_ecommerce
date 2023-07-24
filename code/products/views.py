@@ -22,5 +22,8 @@ class ProductViewSet(mixins.ActionSerializerMixin, ModelViewSet):
 
     queryset = product_services.get_products()
     serializer_class = serializers.ProductSerializer
-    
     permission_classes = permissions.IsAdminOrReadOnly,
+
+    def list(self, request, *args, **kwargs):
+        print(request.api.get('https://httpbin.org/get'))
+        return super().list(request, *args, **kwargs)
