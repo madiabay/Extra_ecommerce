@@ -17,11 +17,26 @@ services:
       - ecommerce-redis
     volumes:
       - .:/proj
-    command: /start-django
+      - /proj/bin
+    command: python /proj/code/manage.py runserver 0.0.0.0:8000
     expose:
       - 8000
     ports:
       - "9000:8000"
+
+  ecommerce-celery:
+    container_name: ecommerce-celery
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - code/.env
+    depends_on:
+      - ecommerce
+    volumes:
+      - .:/proj
+      - /proj/bin
+    command: celery worker -A celery -l info --workdir /proj/code
 
   ecommerce-db:
     container_name: ecommerce-db

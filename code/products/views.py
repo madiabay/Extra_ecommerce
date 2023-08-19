@@ -1,8 +1,11 @@
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from utils import mixins
 from . import services, serializers, permissions
+
+from django.utils.translation import gettext as _
 
 
 class ProductImageViewSet(ModelViewSet):
@@ -25,5 +28,6 @@ class ProductViewSet(mixins.ActionSerializerMixin, ModelViewSet):
     permission_classes = permissions.IsAdminOrReadOnly,
 
     def list(self, request, *args, **kwargs):
-        print(request.api.get('https://httpbin.org/get'))
-        return super().list(request, *args, **kwargs)
+        output = _("Welcome to my site.")
+
+        return Response({'output': output})
