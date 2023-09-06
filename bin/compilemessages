@@ -1,0 +1,5 @@
+#!/bin/bash
+
+python /proj/code/manage.py compilemessages -l ru
+python /proj/code/manage.py compilemessages -l en
+python /proj/code/manage.py compilemessages -l kk

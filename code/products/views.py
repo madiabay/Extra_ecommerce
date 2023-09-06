@@ -1,3 +1,5 @@
+import random
+
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -28,6 +30,7 @@ class ProductViewSet(mixins.ActionSerializerMixin, ModelViewSet):
     permission_classes = permissions.IsAdminOrReadOnly,
 
     def list(self, request, *args, **kwargs):
-        output = _("Welcome to my site.")
+        number = random.choice('0123456789')
+        output = _("Welcome to my site. {}").format(number)
 
         return Response({'output': output})
