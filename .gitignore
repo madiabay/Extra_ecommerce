@@ -163,3 +163,8 @@ cython_debug/
 
 # Redis
 *.rdb
+
+
+# macbook
+.DS_Store
+code/.DS_Store
